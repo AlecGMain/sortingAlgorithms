@@ -14,11 +14,11 @@ namespace AlecSortingAlgorithims
             int[] array = new int[100];
             Random r = new Random();
 
-            for ( int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 array[i] = r.Next(0, 100);
             }
-            for(int i = 0; i<array.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 Console.Write("{0}, ", array[i]);
             }
@@ -56,10 +56,55 @@ namespace AlecSortingAlgorithims
                     }
 
                 }
+
+            }
+
+            return array;
+        }
+        static int[] SelectionSort(int[] array)
+        {
+            for (int j = 0; j < array.Length; j++)
+            {
+                int smallest = j;
+
+                for (int i = j; i < array.Length; i++)
+                {
+                    if (array[i] < array[smallest])
+                    {
+                        smallest = i;
+                    }
+                }
+
+                int second = array[smallest];
+                array[smallest] = array[j];
+                array[j] = second;
                 
             }
             return array;
         }
-
+        static int[] InsertionSort(int[] array)
+        {
+            for(int i = 1; i < array.Length; i++)
+            {
+                int place = i;
+                bool smaller = true;
+                while(smaller)
+                {
+                    if (place != 0 && array[place] < array[place - 1])
+                    {
+                        int second = array[place];
+                        array[place] = array[place - 1];
+                        array[place - 1] = second;
+                        place--;
+                    }
+                    else
+                    {
+                        smaller = false;
+                    }
+                }
+                
+            }
+            return array;
+        }        
     }
 }
