@@ -11,7 +11,7 @@ namespace AlecSortingAlgorithims
         static void Main(string[] args)
         {
             //Testing algorithim.
-            int[] array = new int[100];
+            int[] array = new int[10];
             Random r = new Random();
 
             for (int i = 0; i < array.Length; i++)
@@ -24,7 +24,7 @@ namespace AlecSortingAlgorithims
             }
             Console.WriteLine();
 
-            array = BubbleSort(array);
+            array = MergeSort(array);
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -78,17 +78,17 @@ namespace AlecSortingAlgorithims
                 int second = array[smallest];
                 array[smallest] = array[j];
                 array[j] = second;
-                
+
             }
             return array;
         }
         static int[] InsertionSort(int[] array)
         {
-            for(int i = 1; i < array.Length; i++)
+            for (int i = 1; i < array.Length; i++)
             {
                 int place = i;
                 bool smaller = true;
-                while(smaller)
+                while (smaller)
                 {
                     if (place != 0 && array[place] < array[place - 1])
                     {
@@ -102,9 +102,78 @@ namespace AlecSortingAlgorithims
                         smaller = false;
                     }
                 }
-                
+
             }
             return array;
-        }        
+        }
+
+        static int[] MergeSort(int[] array)
+        {
+            int[] left;
+            int[] right;
+            
+            if (array.Length % 2 == 0)
+            {
+                left = new int[array.Length / 2];
+                 right = new int[array.Length / 2];
+                for (int i = 0; i < array.Length / 2; i++)
+                {
+                    left[i] = array[i];
+                }
+            for (int i = array.Length / 2, j = 0; i < array.Length; i++, j++)
+            {
+                right[j] = array[i];
+            }
+        }
+            else
+            {
+                 left = new int[array.Length - 1 / 2 + 1 ];
+                 right = new int[array.Length / 2];
+                for (int i = 0; i < array.Length - 1 / 2 + 1; i++)
+                {
+                    left[i] = array[i];
+                }
+                for (int i = array.Length - 1 / 2 + 1, j = 0; i < array.Length; i++, j++)
+                {
+                    right[j] = array[i];
+                }
+            }
+            if (left.Length == 1)
+            {
+                return array;
+            }
+
+            return Combine(MergeSort(left), MergeSort(right));
+
+        }
+
+        static int[] Combine(int[] left, int[] right)
+        {
+            int[] array = new int[left.Length + right.Length];
+            if (array.Length % 2 == 0)
+            {
+                for (int i = 0; i < array.Length / 2; i++)
+                {
+                    left[i] = array[i];
+                }
+                for (int i = array.Length / 2, j = 0; i < array.Length; i++, j++)
+                {
+                    right[j] = array[i];
+                }
+            }
+            else
+            {
+                for (int i = 0; i < array.Length - 1 / 2 + 1; i++)
+                {
+                    left[i] = array[i];
+                }
+                for (int i = array.Length - 1 / 2 + 1, j = 0; i < array.Length; i++, j++)
+                {
+                    right[j] = array[i];
+                }
+            }
+            BubbleSort(array);
+            return array;
+        }
     }
 }
