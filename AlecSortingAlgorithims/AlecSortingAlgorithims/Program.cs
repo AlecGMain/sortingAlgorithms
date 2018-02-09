@@ -11,16 +11,20 @@ namespace AlecSortingAlgorithims
         static void Main(string[] args)
         {
             //Testing algorithim.
-            int[] array = new int[10];
+            int[] array = new int[11];
             Random r = new Random();
 
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = r.Next(0, 100);
+                array[i] = r.Next(1, 100);
             }
             for (int i = 0; i < array.Length; i++)
             {
-                Console.Write("{0}, ", array[i]);
+                Console.Write($"{array[i]}");
+                if(i < array.Length - 1)
+                {
+                    Console.Write(", ");
+                }
             }
             Console.WriteLine();
 
@@ -28,7 +32,11 @@ namespace AlecSortingAlgorithims
 
             for (int i = 0; i < array.Length; i++)
             {
-                Console.Write("{0}, ", array[i]);
+                Console.Write($"{array[i]}");
+                if (i < array.Length - 1)
+                {
+                    Console.Write(", ");
+                }
             }
             Console.WriteLine();
             Console.ReadKey();
@@ -109,70 +117,100 @@ namespace AlecSortingAlgorithims
 
         static int[] MergeSort(int[] array)
         {
-            int[] left;
-            int[] right;
-            
-            if (array.Length % 2 == 0)
-            {
-                left = new int[array.Length / 2];
-                 right = new int[array.Length / 2];
-                for (int i = 0; i < array.Length / 2; i++)
-                {
-                    left[i] = array[i];
-                }
-            for (int i = array.Length / 2, j = 0; i < array.Length; i++, j++)
-            {
-                right[j] = array[i];
-            }
-        }
-            else
-            {
-                 left = new int[array.Length - 1 / 2 + 1 ];
-                 right = new int[array.Length / 2];
-                for (int i = 0; i < array.Length - 1 / 2 + 1; i++)
-                {
-                    left[i] = array[i];
-                }
-                for (int i = array.Length - 1 / 2 + 1, j = 0; i < array.Length; i++, j++)
-                {
-                    right[j] = array[i];
-                }
-            }
-            if (left.Length == 1)
+            if (array.Length <= 1)
             {
                 return array;
             }
 
-            return Combine(MergeSort(left), MergeSort(right));
+            int[] left = new int[array.Length / 2];
+            int[] right = new int[array.Length - left.Length];
+
+            int i = 0;
+            for (; i < left.Length; i++)
+            {
+                left[i] = array[i];
+            }
+            for (int j = 0; i < array.Length; i++, j++)
+            {
+                right[j] = array[i];
+            }
+
+            return Merge(MergeSort(left), MergeSort(right));
 
         }
 
-        static int[] Combine(int[] left, int[] right)
+        static int[] Merge(int[] left, int[] right)
         {
             int[] array = new int[left.Length + right.Length];
-            if (array.Length % 2 == 0)
+            int leftIndex = 0; 
+            int rightIndex = 0;
+            int combinedArrayIndex = 0;
+
+            while (combinedArrayIndex < array.Length)
             {
-                for (int i = 0; i < array.Length / 2; i++)
+                //Both left and right arrays still have data left that has not been copied
+                if (leftIndex < left.Length && rightIndex < right.Length)
                 {
-                    left[i] = array[i];
+                    //Determine if right or left side is smaller; copy the smaller value
+                    if (left[leftIndex] >= right[rightIndex])
+                    {
+                        array[combinedArrayIndex] = right[rightIndex];
+                        combinedArrayIndex++;
+                        rightIndex++;
+                    }
+                    else
+                    {
+                        array[combinedArrayIndex] = left[leftIndex];
+                        combinedArrayIndex++;
+                        leftIndex++;
+                    }
                 }
-                for (int i = array.Length / 2, j = 0; i < array.Length; i++, j++)
+                else
                 {
-                    right[j] = array[i];
+                    //One of the arrays is fully copied (possibly both); check if there's any data left to copy 
+                    if(leftIndex == left.Length && rightIndex < right.Length)
+                    {
+                        //Data is still left in the right array - copy it over
+                        while(rightIndex < right.Length)
+                        {
+                            array[combinedArrayIndex] = right[rightIndex];
+                            combinedArrayIndex++;
+                            rightIndex++;
+                        }
+                    }
+                    else if(rightIndex == right.Length && leftIndex < left.Length)
+                    {
+                        //Data is still left in the left array - copy it over
+                        while(leftIndex < left.Length)
+                        {
+                            array[combinedArrayIndex] = left[leftIndex];
+                            combinedArrayIndex++;
+                            leftIndex++;
+                        }
+                    }
                 }
             }
-            else
-            {
-                for (int i = 0; i < array.Length - 1 / 2 + 1; i++)
-                {
-                    left[i] = array[i];
-                }
-                for (int i = array.Length - 1 / 2 + 1, j = 0; i < array.Length; i++, j++)
-                {
-                    right[j] = array[i];
-                }
-            }
-            BubbleSort(array);
+            //if (i > left.Length - 1)
+            //{
+            //    for (j = j; j < right.Length; j++, k++)
+            //    {
+            //        array[k] = right[j];
+            //    }
+            //}
+            //else
+            //{
+            //    for (int l = 0; l < length; l++)
+            //    {
+
+            //    }
+
+            //    for (int m = 0; m < left.Length; i++, k++)
+            //    {
+            //        array[k] = left[i];
+            //    }
+            //}
+
+
             return array;
         }
     }
