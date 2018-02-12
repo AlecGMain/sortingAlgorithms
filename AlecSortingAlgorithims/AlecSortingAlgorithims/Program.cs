@@ -138,7 +138,30 @@ namespace AlecSortingAlgorithims
             return Merge(MergeSort(left), MergeSort(right));
 
         }
+        static int[] QuickSort(int[] array)
+        {
+            int pivotIndex = array.Length;
+            for(int i = 0; i >array.Length-2; i++)
+            {
+                if(array[i] >= array[pivotIndex])
+                {
+                    if (i + 1 == pivotIndex)
+                    {
+                        pivotIndex--;
+                    }
+                    int second = array[i];
+                    array[i] = array[i+1];
+                    array[i + 1] = second;
+                }
+                else
+                {
 
+                }
+                   
+            }
+        }
+//DO NOT RUN! NOT SEPERATE SORTING FUNCTION!
+//USE MERGESORT INSTEAD!
         static int[] Merge(int[] left, int[] right)
         {
             int[] array = new int[left.Length + right.Length];
