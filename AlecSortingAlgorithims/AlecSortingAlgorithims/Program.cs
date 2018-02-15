@@ -11,7 +11,7 @@ namespace AlecSortingAlgorithims
         static void Main(string[] args)
         {
             //Testing algorithim.
-            int[] array = new int[11];
+            int[] array = new int[10];
             Random r = new Random();
 
             for (int i = 0; i < array.Length; i++)
@@ -28,7 +28,7 @@ namespace AlecSortingAlgorithims
             }
             Console.WriteLine();
 
-            array = MergeSort(array);
+            array = QuickSort(array);
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -140,24 +140,53 @@ namespace AlecSortingAlgorithims
         }
         static int[] QuickSort(int[] array)
         {
-            int pivotIndex = array.Length;
-            for(int i = 0; i >array.Length-2; i++)
+            int pivotIndex = array.Length - 1;
+            if (array.Length > 1)
             {
-                if(array[i] >= array[pivotIndex])
+                for (int i = 0; i < array.Length - 2; i++)
                 {
-                    if (i + 1 == pivotIndex)
+                    if (array[i] >= array[pivotIndex])
                     {
-                        pivotIndex--;
+                        if (i + 1 == pivotIndex)
+                        {
+                            pivotIndex--;
+                        }
+                        int second = array[i];
+                        array[i] = array[i + 1];
+                        array[i + 1] = second;
                     }
-                    int second = array[i];
-                    array[i] = array[i+1];
-                    array[i + 1] = second;
-                }
-                else
-                {
+                    else
+                    {
+
+                    }
 
                 }
-                   
+                int[] left = new int[(array.Length - 1) - ((array.Length - 1) - pivotIndex) + 1];
+                int[] right = new int[(array.Length - 1) - (left.Length - 1)];
+                for (int i = 0; i < left.Length - 1; i++)
+                {
+                    left[i] = array[i];
+                }
+                for (int i = pivotIndex + 1; i < array.Length; i++)
+                {
+                    right[i] = array[i];
+                }
+                left = QuickSort(left);
+                right = QuickSort(right);
+
+                for (int i = 0; i < left.Length - 1; i++)
+                {
+                    array[i] = left[i];
+                }
+                for (int i = pivotIndex + 1; i < array.Length; i++)
+                {
+                    array[i] = right[i];
+                }
+                return array;
+            }
+            else
+            {
+                return array;
             }
         }
 //DO NOT RUN! NOT SEPERATE SORTING FUNCTION!
