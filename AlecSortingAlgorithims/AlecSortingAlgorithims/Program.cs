@@ -21,7 +21,7 @@ namespace AlecSortingAlgorithims
             for (int i = 0; i < array.Length; i++)
             {
                 Console.Write($"{array[i]}");
-                if(i < array.Length - 1)
+                if (i < array.Length - 1)
                 {
                     Console.Write(", ");
                 }
@@ -162,7 +162,7 @@ namespace AlecSortingAlgorithims
 
                 }
                 int[] left = new int[(array.Length - 1) - ((array.Length - 1) - pivotIndex) + 1];
-                int[] right = new int[(array.Length - 1) - (left.Length - 1)];
+                int[] right = new int[(array.Length - 1) - (left.Length - 1) + 1];
                 for (int i = 0; i < left.Length - 1; i++)
                 {
                     left[i] = array[i];
@@ -184,17 +184,15 @@ namespace AlecSortingAlgorithims
                 }
                 return array;
             }
-            else
-            {
-                return array;
-            }
+
+            return array;
         }
-//DO NOT RUN! NOT SEPERATE SORTING FUNCTION!
-//USE MERGESORT INSTEAD!
+        //DO NOT RUN! NOT SEPERATE SORTING FUNCTION!
+        //USE MERGESORT INSTEAD!
         static int[] Merge(int[] left, int[] right)
         {
             int[] array = new int[left.Length + right.Length];
-            int leftIndex = 0; 
+            int leftIndex = 0;
             int rightIndex = 0;
             int combinedArrayIndex = 0;
 
@@ -220,20 +218,20 @@ namespace AlecSortingAlgorithims
                 else
                 {
                     //One of the arrays is fully copied (possibly both); check if there's any data left to copy 
-                    if(leftIndex == left.Length && rightIndex < right.Length)
+                    if (leftIndex == left.Length && rightIndex < right.Length)
                     {
                         //Data is still left in the right array - copy it over
-                        while(rightIndex < right.Length)
+                        while (rightIndex < right.Length)
                         {
                             array[combinedArrayIndex] = right[rightIndex];
                             combinedArrayIndex++;
                             rightIndex++;
                         }
                     }
-                    else if(rightIndex == right.Length && leftIndex < left.Length)
+                    else if (rightIndex == right.Length && leftIndex < left.Length)
                     {
                         //Data is still left in the left array - copy it over
-                        while(leftIndex < left.Length)
+                        while (leftIndex < left.Length)
                         {
                             array[combinedArrayIndex] = left[leftIndex];
                             combinedArrayIndex++;
