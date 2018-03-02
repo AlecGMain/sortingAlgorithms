@@ -138,55 +138,84 @@ namespace AlecSortingAlgorithims
             return Merge(MergeSort(left), MergeSort(right));
 
         }
-        static int[] QuickSort(int[] array)
+        static void Partition(int[] array, int start, int end)
         {
-            int pivotIndex = array.Length - 1;
-            if (array.Length > 1)
+            int pivotIndex = end;
+            int wall = start - 1;
+            for(int i = 0; i < end; i++)
             {
-                for (int i = 0; i < array.Length - 2; i++)
+                if (array[i] >= array[pivotIndex])
                 {
-                    if (array[i] >= array[pivotIndex])
-                    {
-                        if (i + 1 == pivotIndex)
-                        {
-                            pivotIndex--;
-                        }
-                        int second = array[i];
-                        array[i] = array[i + 1];
-                        array[i + 1] = second;
-                    }
-                    else
-                    {
+                    
+                }
+                else
+                {
+                    int next = array[i + 1];
+                    array[i + 1] = array[i];
+                    array[i] = next;
+                    wall++;
+                }
+                int second = array[pivotIndex];
+                array[pivotIndex] = array[wall];
+                array[wall] = second;
+                second = pivotIndex;
+                pivotIndex = wall;
+                wall = second;
 
-                    }
 
-                }
-                int[] left = new int[(array.Length - 1) - ((array.Length - 1) - pivotIndex) + 1];
-                int[] right = new int[(array.Length - 1) - (left.Length - 1) + 1];
-                for (int i = 0; i < left.Length - 1; i++)
-                {
-                    left[i] = array[i];
-                }
-                for (int i = pivotIndex + 1; i < array.Length; i++)
-                {
-                    right[i] = array[i];
-                }
-                left = QuickSort(left);
-                right = QuickSort(right);
-
-                for (int i = 0; i < left.Length - 1; i++)
-                {
-                    array[i] = left[i];
-                }
-                for (int i = pivotIndex + 1; i < array.Length; i++)
-                {
-                    array[i] = right[i];
-                }
-                return array;
             }
-
-            return array;
+            
         }
+        //{
+        //    int pivotIndex = array.Length - 1;
+        //    if (array.Length > 1)
+        //    {
+        //        for (int i = 0; i < a
+
+        //static int[] QuickSort(int[] array)rray.Length - 2; i++)
+        //        {
+        //            if (array[i] >= array[pivotIndex])
+        //            {
+        //                if (i + 1 == pivotIndex)
+        //                {
+        //                    pivotIndex--;
+        //                }
+        //                int second = array[i];
+        //                array[i] = array[i + 1];
+        //                array[i + 1] = second;
+        //            }
+        //            else
+        //            {
+
+        //            }
+
+        //        }
+        //        int[] left = new int[(array.Length - 1) - ((array.Length - 1) - pivotIndex) + 1];
+        //        int[] right = new int[(array.Length - 1) - (left.Length - 1) + 1];
+        //        for (int i = 0; i < left.Length - 1; i++)
+        //        {
+        //            left[i] = array[i];
+        //        }
+        //        for (int i = pivotIndex + 1; i < array.Length; i++)
+        //        {
+        //            right[i] = array[i];
+        //        }
+        //        left = QuickSort(left);
+        //        right = QuickSort(right);
+
+        //        for (int i = 0; i < left.Length - 1; i++)
+        //        {
+        //            array[i] = left[i];
+        //        }
+        //        for (int i = pivotIndex + 1; i < array.Length; i++)
+        //        {
+        //            array[i] = right[i];
+        //        }
+        //        return array;
+        //    }
+
+        //    return array;
+        //}
         //DO NOT RUN! NOT SEPERATE SORTING FUNCTION!
         //USE MERGESORT INSTEAD!
         static int[] Merge(int[] left, int[] right)
