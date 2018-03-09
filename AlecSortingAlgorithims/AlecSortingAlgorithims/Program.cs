@@ -7,16 +7,25 @@ using System.Threading.Tasks;
 namespace AlecSortingAlgorithims
 {
     class Program
-    {
+    {        
         static void Main(string[] args)
         {
             //Testing algorithim.
-            int[] array = new int[10];
+            int[] array = { 7, 4, 3, 6, 2, 1, 5 };
+            
             Random r = new Random();
+
+            int seed = r.Next();
+
+            seed = 1;
+
+            //Console.WriteLine($"Seed: {seed}");
+
+            r = new Random(seed);
 
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = r.Next(1, 100);
+                //array[i] = r.Next(1, 100);
             }
             for (int i = 0; i < array.Length; i++)
             {
@@ -26,9 +35,9 @@ namespace AlecSortingAlgorithims
                     Console.Write(", ");
                 }
             }
-            Console.WriteLine();
+            Console.WriteLine();            
 
-            array = QuickSort(array);
+            QuickSort(array, 0, array.Length - 1);
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -138,33 +147,41 @@ namespace AlecSortingAlgorithims
             return Merge(MergeSort(left), MergeSort(right));
 
         }
-        static void Partition(int[] array, int start, int end)
+
+        static void QuickSort(int[] array, int start, int end)
         {
+            int split = 0;
+            if (start < end)
+            {
+                split = Partition(array, start, end);
+
+                QuickSort(array, start, split - 1);
+                QuickSort(array, split + 1, end);
+            }            
+        }
+
+        static int Partition(int[] array, int start, int end)
+        {            
             int pivotIndex = end;
             int wall = start - 1;
-            for(int i = 0; i < end; i++)
+            for(int i = start; i < end; i++)
             {
-                if (array[i] >= array[pivotIndex])
+                if(array[i] <= array[pivotIndex])
                 {
-                    
-                }
-                else
-                {
-                    int next = array[i + 1];
-                    array[i + 1] = array[i];
-                    array[i] = next;
                     wall++;
-                }
-                int second = array[pivotIndex];
-                array[pivotIndex] = array[wall];
-                array[wall] = second;
-                second = pivotIndex;
-                pivotIndex = wall;
-                wall = second;
-
-
+                    int next = array[wall];
+                    array[wall] = array[i];
+                    array[i] = next;                    
+                }                
             }
-            
+
+            int second = array[pivotIndex];
+            array[pivotIndex] = array[wall + 1];
+            array[wall+ 1] = second;
+            second = pivotIndex;
+            pivotIndex = wall + 1;            
+
+            return wall + 1;
         }
         //{
         //    int pivotIndex = array.Length - 1;
